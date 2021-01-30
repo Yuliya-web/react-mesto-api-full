@@ -1,0 +1,19 @@
+.element__delete-card {
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-image: url(../../../images/delete-card.png);
+  background-color: transparent;
+  background-repeat: no-repeat;  
+  height: 19.3px; 
+  width: 18px;  
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  z-index: 1;
+}
+.element__delete-card:hover {  
+  cursor: pointer;
+  transition: opacity .9s;
+  opacity: .5;
+}

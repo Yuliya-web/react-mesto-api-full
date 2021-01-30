@@ -1,0 +1,28 @@
+.add-popup__add-button {
+  width: 100%;
+  background-color: #000000;
+  min-height: 50.15px;
+  font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+  margin: 0;  
+  margin-top: 48px;
+  border: none;
+  border-radius: 2px;
+}
+
+.add-popup__add-button:hover {
+  cursor: pointer;
+  transition: opacity .5s;
+  opacity: 0.8;
+}
+
+@media (max-width: 440px){
+  .add-popup__add-button {  
+    margin-top: 32px;
+  }
+}

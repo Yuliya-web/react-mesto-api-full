@@ -1,0 +1,29 @@
+.popup__name-field_black {  
+  border: none;
+  border-bottom: 1px solid;
+  border-color:#CCCCCC;
+  margin-top: 51px;
+  outline: none;
+  width: 100%;
+  padding: 0;
+  padding-bottom: 12px;
+  font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  height: 14px;
+  color: #ffffff;
+  background-color: black;
+}
+
+.popup__name-field_black :last-of-type {  
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
+@media (max-width: 370px){
+  .popup__name-field_black   {  
+    margin-top: 31px;
+  }
+}

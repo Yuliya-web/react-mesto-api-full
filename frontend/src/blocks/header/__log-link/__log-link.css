@@ -1,0 +1,13 @@
+  .header__log-link {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: opacity 0.4s linear;
+}
+
+.header__log-link:hover {
+  opacity: 0.6;
+  transition: opacity 0.4s linear;
+}
+

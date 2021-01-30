@@ -1,0 +1,12 @@
+.page {  
+  margin: 0 auto;
+  background-color: #000000;
+  position: relative;
+  color: #FFFFFF;
+  min-width: 300px;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-link-color: #FFFFFF;
+}
+

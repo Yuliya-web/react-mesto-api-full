@@ -1,0 +1,11 @@
+.header__info-container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 6px;
+}
+@media (max-width: 650px) {
+  .header__info-container {
+    right: 27px; 
+    flex-direction: column;
+  }
+}

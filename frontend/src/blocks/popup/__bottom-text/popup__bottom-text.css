@@ -1,0 +1,18 @@
+.popup__bottom-text {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: #fff;
+  cursor: pointer;
+}
+.popup__bottom-text:last-of-type:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 620px) {
+  .popup__bottom-text{
+      font-size: 14px;
+      line-height: 17px;
+  }
+}

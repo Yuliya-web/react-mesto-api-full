@@ -1,0 +1,30 @@
+.popup__container_black {
+  background: #000000;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;  
+  margin: auto;
+  padding-right: 36px;
+  padding-left: 36px;
+  padding-top: 34px;
+  padding-bottom: 36.51px;
+  width: 430px;
+  box-sizing:border-box;
+  position: relative;
+  z-index: 2;
+  cursor: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 560px){
+  .popup__container_black {  
+    width: 400px;
+  }
+}
+
+@media (max-width: 470px){
+  .popup__container_black {  
+    width: 290px;
+  }
+}

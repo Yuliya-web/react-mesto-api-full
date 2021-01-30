@@ -1,0 +1,42 @@
+.pic-popup__close-button {  
+  position: absolute;
+  right: -5.7px;
+  top: -25.7px;
+  right: -5.7px;
+  top: -25.7px;
+  width: 40.7px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+}
+
+.pic-popup__close-button:hover {
+  transition: opacity .5s;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.pic-popup__close-button:before, .pic-popup__close-button:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 40.7px;
+  width: 4.5px;
+  background-color: #FFFFFF;
+}
+.pic-popup__close-button:before {
+  transform: rotate(45deg);
+}
+.pic-popup__close-button:after {
+  transform: rotate(-45deg);
+}
+@media (max-width: 370px){
+  .pic-popup__close-button {  
+    right: .7px;
+    top: -8.7px;
+  }
+  .pic-popup__close-button:before, .pic-popup__close-button:after {
+    background-color: #FFFFFF;
+    height: 24.7px;
+  }
+}

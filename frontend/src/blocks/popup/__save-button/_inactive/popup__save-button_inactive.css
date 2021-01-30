@@ -1,0 +1,18 @@
+.popup__save-button_inactive {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 1px solid #000000;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.popup__save-button_inactive:hover {
+  cursor: auto;
+  opacity: 0.2;
+}
+
+@media (max-width: 440px){
+  .popup__save-button_inactive {  
+    margin-top: 32px;
+  }
+}

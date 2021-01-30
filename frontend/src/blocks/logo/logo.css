@@ -1,0 +1,28 @@
+.logo {
+    background-image: url(../../images/logo.svg);
+    position: relative;
+    margin: 0;
+    align-self: flex-start;
+    width: 142.01px;
+    height: 33.4px;
+    background-size: cover;
+}
+
+.logo:hover {
+  cursor: pointer;
+  transition: opacity .8s;
+  opacity: 0;
+}
+
+@media (max-width: 650px) {
+  .logo {
+    left: 27px; 
+  }
+}
+
+ @media (max-width: 425px) {
+  .logo {
+    width: 103.74px;
+    height: 24.4px;    
+  }
+}
