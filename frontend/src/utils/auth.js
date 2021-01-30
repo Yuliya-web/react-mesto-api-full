@@ -1,5 +1,6 @@
-const BASE_URL = 'http://localhost:3000';
+//const BASE_URL = 'http://localhost:3000';
 //const BASE_URL = 'https://auth.nomoreparties.co';
+const BASE_URL = 'api.mesto1.students.nomoredomains.rocks';
 
 export const authorize = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {

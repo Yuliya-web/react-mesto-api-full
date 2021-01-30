@@ -1,5 +1,6 @@
-const BASE_URL = 'http://localhost:3000';
-  
+//const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'api.mesto1.students.nomoredomains.rocks';
+
 function getResponseData (res) {
   if (res.ok) {
     return res.json();
