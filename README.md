@@ -6,7 +6,7 @@
 
 **Ссылки на проект
 
-* [Ссылка] https://mesto1.students.nomoredomains.rocks - frontend, https://api.mesto1.students.nomoredomains.rocks - backend 
+* [Ссылка] https://mesto1.students.nomoredomains.rocks - frontend, https://api.mesto1.students.nomoredomains.rocks - backend (IP: 178.154.252.34)
 
 **Использованные технологии**
 

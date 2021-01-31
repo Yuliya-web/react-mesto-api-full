@@ -1,11 +1,13 @@
 const Card = require('../models/card');
 const ForbiddenError = require('../errors/ForbiddenError');
+const RequestError = require('../errors/RequestError');
+const AbsError = require('../errors/AbsError');
 
 // создаёт карточку
 module.exports.createCard = (req, res) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send( card ))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         res.status(400).send({ message: 'Ошибка добавления карточки' });
@@ -16,7 +18,7 @@ module.exports.createCard = (req, res) => {
 // возвращает все карточки
 module.exports.getCards = (req, res) => Card.find({})
   .populate(['owner', 'likes'])
-  .then((card) => res.send( card ))
+  .then((card) => res.send(card))
   .catch((err) => {
     if (err.name === 'CardsError') {
       res.status(400).send({ message: 'Некорректные данные' });
@@ -24,10 +26,28 @@ module.exports.getCards = (req, res) => Card.find({})
   });
 
 // удаляет карточку по идентификатору
-module.exports.deleteCard = (req, res) => Card.findByIdAndRemove(req.params._id)
-.orFail(new Error('FindIdError'))
-.then(() => res.status(200).send({ message: 'Карточка удалена' }))
-.catch((err) => manageErrorStatus(res, err, 'карточки'));
+module.exports.deleteCard = (req, res, next) => {
+  const owner = req.user._id;
+  return Card.findById(req.params._id)
+    .then((card) => {
+      if (!card) {
+        throw new AbsError('Неверный id карточки');
+      }
+      if (JSON.stringify(owner) !== JSON.stringify(card.owner)) {
+        throw new ForbiddenError('Нет прав для удаления');
+      }
+      return Card.remove({ _id: card._id })
+        .then(() => res.status(200).send({ message: 'Карточка удалена' }))
+        .catch(next);
+    })
+    .catch((err) => {
+      if (err.kind === 'ObjectId') {
+        throw new RequestError('Некорректный id');
+      }
+      throw err;
+    })
+    .catch(next);
+};
 
 // поставить лайк карточке
 module.exports.likeCard = (req, res) => {
@@ -40,7 +60,7 @@ module.exports.likeCard = (req, res) => {
       if (card === null) {
         return res.status(404).send({ message: `Не существует карточки с id ${req.params.cardId}` });
       }
-      return res.send( card );
+      return res.send(card);
     })
     .catch((err) => {
       if (!err.messageFormat) {
@@ -61,7 +81,7 @@ module.exports.dislikeCard = (req, res) => {
       if (card === null) {
         return res.status(404).send({ message: `Не существует карточки с id ${req.params.cardId}` });
       }
-      return res.send( card );
+      return res.send(card);
     })
     .catch((err) => {
       if (!err.messageFormat) {

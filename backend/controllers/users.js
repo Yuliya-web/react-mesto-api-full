@@ -11,21 +11,21 @@ const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.status(200).send(users))
     .catch(next);
-}
+};
 
 // возвращает пользователя по _id
 const getUser = (req, res, next) => {
-  User.findById(req.user._id === 'me' ? req.user : req.user._id)
+  User.findById(req.params._id === 'me' ? req.user : req.params._id)
     .orFail(new AbsError('Нет пользователя с таким id'))
     .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        throw new RequestError('Некорректный id');
+        throw new RequestError('Не передан корректный id');
       }
       throw err;
     })
     .catch(next);
-}
+};
 
 // возвращает информацию о текущем пользователе
 const getUserInfo = (req, res, next) => {
@@ -78,7 +78,7 @@ const updateUser = (req, res) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
     .orFail(new Error('AbsError'))
-    .then((user) => res.send( user ))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.message === 'AbsError') {
         res.status(404).send({ message: 'Такой пользователь отсутствует в базе' });
@@ -95,7 +95,7 @@ const updateAvatar = (req, res) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(new Error('AbsError'))
-    .then((avatar) => res.send( avatar ))
+    .then((ava) => res.send(ava))
     .catch((err) => {
       if (err.message === 'AbsError') {
         res.status(404).send({ message: 'Такой пользователь отсутствует в базе' });
@@ -114,5 +114,5 @@ module.exports = {
   createUser,
   login,
   updateUser,
-  updateAvatar
+  updateAvatar,
 };

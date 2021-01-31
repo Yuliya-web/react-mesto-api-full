@@ -9,6 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const cardsRoutes = require('./routes/cards');
 const userRoutes = require('./routes/users');
+const AbsError = require('./errors/AbsError');
 const { login } = require('./controllers/users');
 const { createUser } = require('./controllers/users');
 
@@ -47,7 +48,7 @@ app.post('/signup', celebrate({
     about: Joi.string().max(30).min(2),
     avatar: Joi.string().pattern(/^((http|https):\/\/)(www\.)?([\w\W\d]{1,})(\.)([a-zA-Z]{1,10})([\w\W\d]{1,})?$/),
     email: Joi.string().email().required(),
-    password: Joi.string().required(),
+    password: Joi.string().required().min(8),
   }),
 }), createUser);
 
@@ -61,7 +62,7 @@ app.use('/cards', auth, cardsRoutes);
 app.use(errors());
 
 app.use(errors());
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).send({
     message: statusCode === 500
@@ -70,10 +71,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.use('/*', (req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+app.use('/*', (next) => {
+  next(new AbsError('Страница не найдена'));
 });
 
 app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
   console.log(`Сервер запущен на порту ${PORT}`);
 });

@@ -14,7 +14,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "deploy": "npm run build && scp -r ./build/* vilka1122@178.154.252.34:/home/vilka1122/react-mesto-api-full/frontend",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
