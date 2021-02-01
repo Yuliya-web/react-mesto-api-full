@@ -4,6 +4,7 @@ const User = require('../models/user');
 const UserError = require('../errors/UserError');
 const AbsError = require('../errors/AbsError');
 const RequestError = require('../errors/RequestError');
+const ExistEmailError = require('../errors/ExistEmailError');
 
 // возвращает всех пользователей
 const getUsers = (req, res, next) => {
@@ -47,7 +48,7 @@ const createUser = (req, res, next) => {
   return User.findOne({ email })
     .then((user) => {
       if (user) {
-        throw new RequestError('Пользователь с таким email существует в базе');
+        throw new ExistEmailError('Пользователь с таким email существует в базе');
       }
       return bcrypt.hash(password, 8)
         .then((hash) => User.create({
