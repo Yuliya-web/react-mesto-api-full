@@ -16,6 +16,8 @@ export const authorize = (email, password) => {
             throw new Error('Не передано одно из полей')
         } else if (res.status === 401) {
             throw new Error('Некорректный email или пароль')
+        } else if (res.status === 409) {
+            throw new Error('Такой email уже был зарегистрирован!')
         } else
         return res.json()
     })
@@ -37,9 +39,10 @@ export const register = (email, password) => {
         },
         body: JSON.stringify({ email, password })
     })
-    .then(response => {
-        if (response.status === 400) throw new Error('Некорректно заполнено одно из полей') 
-        return response.json()
+    .then(res => {
+        if (res.status === 400) {throw new Error('Некорректно заполнено одно из полей')} 
+        else if (res.status === 409) {throw new Error('Такой email уже был зарегистрирован!')}        
+        else return res.json()
     })
     .then(res => res)
 }
