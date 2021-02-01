@@ -1,7 +1,7 @@
 const Card = require('../models/card');
 const ForbiddenError = require('../errors/ForbiddenError');
-const RequestError = require('../errors/RequestError');
-const AbsError = require('../errors/AbsError');
+// const RequestError = require('../errors/RequestError');
+// const AbsError = require('../errors/AbsError');
 
 // создаёт карточку
 module.exports.createCard = (req, res) => {
@@ -26,17 +26,25 @@ module.exports.getCards = (req, res) => Card.find({})
   });
 
 // удаляет карточку по идентификатору
-module.exports.deleteCard = (req, res, next) => {
-  Card.findById({ _id: req.params._id })
-    .orFail(new AbsError('Карточка не найдена'))
+module.exports.deleteCard = (req, res) => {
+  Card.findById(req.params._id)
+    .orFail(new Error('AbsError'))
     .then((card) => {
       if (card.owner.toString() !== req.user._id) {
-        throw new ForbiddenError('Нет прав');
+        throw new Error('ForbiddenError');
       }
       card.remove()
         .then(() => res.status(200).send({ message: 'Карточка удалена' }));
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.message === 'AbsError') {
+        return res.status(404).send({ message: 'Карточка с таким id не найдена' });
+      }
+      if (err.message === 'ForbiddenError') {
+        return res.status(403).send({ message: 'Нет прав на удаление' });
+      }
+      return res.status(500).send({ message: 'Ошибка сервера' });
+    });
 };
 
 // поставить лайк карточке
