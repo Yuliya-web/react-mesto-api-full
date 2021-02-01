@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const errorsHandler = require('./middlewares/errorsHandler');
 const auth = require('./middlewares/auth');
 const cardsRoutes = require('./routes/cards');
 const userRoutes = require('./routes/users');
@@ -54,12 +55,8 @@ app.post('/signup', celebrate({
 
 app.use(auth);
 
-app.use(errorLogger);
-
 app.use('/users', auth, userRoutes);
 app.use('/cards', auth, cardsRoutes);
-
-app.use(errors());
 
 app.use(errors());
 app.use((err, req, res) => {
@@ -74,6 +71,9 @@ app.use((err, req, res) => {
 app.use('/*', (next) => {
   next(new AbsError('Страница не найдена'));
 });
+app.use(errors());
+app.use(errorLogger);
+app.use(errorsHandler);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
