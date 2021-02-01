@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const UserError = require('../errors/UserError');
-const ExistEmailError = require('../errors/ExistEmailError');
 const AbsError = require('../errors/AbsError');
 const RequestError = require('../errors/RequestError');
 
