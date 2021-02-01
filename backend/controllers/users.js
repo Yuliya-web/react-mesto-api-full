@@ -37,19 +37,29 @@ const getUserInfo = (req, res, next) => {
 
 // создает пользователя
 const createUser = (req, res, next) => {
-  const { email, password } = req.body;
-  User.findOne({ email })
+  const {
+    name,
+    about,
+    avatar,
+    email,
+    password,
+  } = req.body;
+
+  return User.findOne({ email })
     .then((user) => {
       if (user) {
-        throw new ExistEmailError('Такой email уже зарегистрирован');
+        throw new RequestError('Пользователь с таким email существует в базе');
       }
-      return bcrypt.hash(password, 10);
-    })
-    .then((hash) => {
-      User.create({ email, password: hash })
-        .then(({ _id }) => {
-          res.send({ email, _id });
-        });
+      return bcrypt.hash(password, 8)
+        .then((hash) => User.create({
+          name,
+          about,
+          avatar,
+          email,
+          password: hash,
+        }))
+        .then((data) => res.status(200).send({ email: data.email }))
+        .catch(next);
     })
     .catch(next);
 };

@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('cors');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorsHandler = require('./middlewares/errorsHandler');
@@ -16,14 +16,6 @@ const { createUser } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://mesto1.students.nomoredomains.rocks');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
-
-  next();
-});
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
@@ -65,9 +57,8 @@ app.use(auth);
 
 app.use('/users', auth, userRoutes);
 app.use('/cards', auth, cardsRoutes);
-
-app.use('/*', (next) => {
-  next(new AbsError('Страница не найдена'));
+app.use('/*', () => {
+  throw new AbsError('Страница не найдена');
 });
 app.use(errors());
 app.use(errorLogger);

@@ -27,24 +27,14 @@ module.exports.getCards = (req, res) => Card.find({})
 
 // удаляет карточку по идентификатору
 module.exports.deleteCard = (req, res, next) => {
-  const owner = req.user._id;
-  return Card.findById(req.params._id)
+  Card.findById({ _id: req.params._id })
+    .orFail(new AbsError('Карточка не найдена'))
     .then((card) => {
-      if (!card) {
-        throw new AbsError('Неверный id карточки');
+      if (card.owner.toString() !== req.user._id) {
+        throw new ForbiddenError('Нет прав');
       }
-      if (JSON.stringify(owner) !== JSON.stringify(card.owner)) {
-        throw new ForbiddenError('Нет прав для удаления');
-      }
-      return Card.remove({ _id: card._id })
-        .then(() => res.status(200).send({ message: 'Карточка удалена' }))
-        .catch(next);
-    })
-    .catch((err) => {
-      if (err.kind === 'ObjectId') {
-        throw new RequestError('Некорректный id');
-      }
-      throw err;
+      card.remove()
+        .then(() => res.status(200).send({ message: 'Карточка удалена' }));
     })
     .catch(next);
 };
