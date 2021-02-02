@@ -55,13 +55,13 @@ module.exports.likeCard = (req, res) => {
   )
     .then((card) => {
       if (card === null) {
-        return res.status(404).send({ message: `Не существует карточки с id ${req.params.cardId}` });
+        return res.status(404).send({ message: 'Карточка с таким id не найдена' });
       }
       return res.send(card);
     })
     .catch((err) => {
       if (!err.messageFormat) {
-        return res.status(404).send({ message: `Не существует карточки с id ${req.params.cardId}` });
+        return res.status(404).send({ message: 'Карточка с таким id не найдена' });
       }
       return res.status(500).send({ message: 'Ошибка сервера' });
     });

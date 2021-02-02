@@ -4,7 +4,6 @@ const User = require('../models/user');
 const UserError = require('../errors/UserError');
 const AbsError = require('../errors/AbsError');
 const RequestError = require('../errors/RequestError');
-const ExistEmailError = require('../errors/ExistEmailError');
 
 // возвращает всех пользователей
 const getUsers = (req, res, next) => {
